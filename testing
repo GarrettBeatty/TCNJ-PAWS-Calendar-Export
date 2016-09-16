@@ -1,0 +1,63 @@
+
+var classNames = [];
+for(var i = 0; i < 7; i++){
+ classNames.push($x('//*[@id="win0divCLASS_NAME$' + i + '"]/span/text()[1]'));
+}
+
+var dates = [];
+for(var i = 0; i < 7; i++){
+row = [];
+row.push($x('//*[@id="DERIVED_SSS_SCL_SSR_MTG_SCHED_LONG$' + i + '"]/text()[1]'));
+row.push($x('//*[@id="DERIVED_SSS_SCL_SSR_MTG_SCHED_LONG$' + i + '"]/text()[3]'));
+dates.push(row);
+}
+
+
+var locs = [];
+for(var i = 0; i < 7; i++){
+row = [];
+row.push($x('//*[@id="DERIVED_SSS_SCL_SSR_MTG_SCHED_LONG$' + i + '"]/text()[2]'));
+row.push($x('//*[@id="DERIVED_SSS_SCL_SSR_MTG_SCHED_LONG$' + i + '"]/text()[4]'));
+locs.push(row);
+}
+
+courses = [];
+
+createTable();
+
+function createTable() {
+
+	for(name in classNames){
+		course = {};
+
+		course.name = classNames[name][0];
+
+		if(dates[name][0] != null && dates[name][1] != null){
+
+			course.times = [dates[name][0][0],dates[name][1][0]];
+
+		}else if(dates[name][0] != null){
+
+			course.times = [dates[name][0][0]];
+
+		}else{
+			course.times = [];
+		}
+
+
+
+		if(locs[name][0] != null && locs[name][1] != null){
+			course.locs = [locs[name][0][0],locs[name][1][0]];
+		}else if(locs[name][0] != null){
+			course.locs = [locs[name][0][0]];
+		}else{
+			course.locs = [];
+		}
+		
+		courses.push(course);
+	}
+
+	for(course in courses){
+		console.log(courses[course]);
+	}
+}
